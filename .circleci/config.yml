@@ -34,11 +34,6 @@ jobs:
       - attach_workspace:
           at: ~/project/target/as-0.0.1.jar
       - run: ls   
-      - aws-s3/sync:
-          arguments: |
-            --cache-control "max-age=86400"
-          from: ~/project/target/as-0.0.1.jar
-          to: 's3://azlabs-circleci'
       - aws-s3/copy:
           arguments: --dryrun
           from: ~/project/target/as-0.0.1.jar
