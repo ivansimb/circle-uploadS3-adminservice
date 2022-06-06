@@ -20,9 +20,9 @@ jobs:
             - ~/.m2/repository
           key: circleci-java-maven-{{ checksum "/tmp/maven_cache_seed" }}
       - store_test_results:
-          path: ~/project/target/testms-0.1.jar
+          path: ~/project/target/as-0.0.1.jar
       - store_artifacts:
-          path: ~/project/target/testms-0.1.jar
+          path: ~/project/target/as-0.0.1.jar
       - persist_to_workspace:
           root: ~/project
           paths: .
@@ -32,17 +32,17 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: ~/project/target/testms-0.1.jar
+          at: ~/project/target/as-0.0.1.jar
       - run: ls   
       - aws-s3/sync:
           arguments: |
             --acl public-read \
             --cache-control "max-age=86400"
-          from: ~/project/target/testms-0.1.jar
+          from: ~/project/target/as-0.0.1.jar
           to: 's3://azlabs-circleci'
       - aws-s3/copy:
           arguments: --dryrun
-          from: ~/project/target/testms-0.1.jar
+          from: ~/project/target/as-0.0.1.jar
           to: 's3://azlabs-circleci'
 workflows:
   version: 2
