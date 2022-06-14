@@ -1,6 +1,7 @@
 version: '2.1'
 orbs:
   aws-s3: circleci/aws-s3@3.0
+  email: cinotify/email@1.2.0
 jobs:
   build:
     docker:
@@ -49,6 +50,12 @@ workflows:
     jobs:
       - hold:
           type: approval
+          requires:
+            - email/send
+      - email/send:
+          body: 'Please approve hold build process at https://app.circleci.com/pipelines/github/ivansimb/upload-to-S3'
+          subject: CircleCI job started
+          to: ivan.simbolon@gmail.com
       - build:
           requires:
             - hold
