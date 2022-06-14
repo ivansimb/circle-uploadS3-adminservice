@@ -53,7 +53,7 @@ workflows:
           requires:
             - email/send
       - email/send:
-          body: 'Please approve hold build process at https://app.circleci.com/pipelines/github/ivansimb/upload-to-S3'
+          body: 'Please approve hold build process at https://app.circleci.com/pipelines/github/ivansimb/circle-uploadS3-adminservice'
           subject: CircleCI job started
           to: ivan.simbolon@gmail.com
       - build:
