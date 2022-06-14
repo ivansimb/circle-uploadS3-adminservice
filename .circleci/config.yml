@@ -25,7 +25,7 @@ jobs:
       - store_artifacts:
           path: ~/project/target/as-0.0.1.jar
       - persist_to_workspace:
-          root: ~/project
+          root: ~/project/target/
           paths: .
   deploy-to-s3:
     docker:
