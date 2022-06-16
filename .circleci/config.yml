@@ -14,7 +14,7 @@ jobs:
       - restore_cache:
           key: circleci-java-maven-{{ checksum "/tmp/maven_cache_seed" }}
       - run:
-          command: mvn -Puat clean package
+          command: mvn -Psit clean package
           working_directory: ~/project
       - save_cache:
           paths:
@@ -39,11 +39,11 @@ jobs:
           arguments: |
             --cache-control "max-age=86400"
           from: ~/project/target/as-0.0.1.jar
-          to: 's3://azlabs-circleci'
+          to: 's3://sdh-ca/circleci/admin-service/'
       - aws-s3/copy:
           arguments: --dryrun
           from: ~/project/target/as-0.0.1.jar
-          to: 's3://azlabs-circleci/target/'          
+          to: 's3://sdh-ca/circleci/admin-service/'          
 workflows:
   version: 2
   build-test-and-approval-deploy:
