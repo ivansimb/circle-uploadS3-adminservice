@@ -15,9 +15,6 @@ jobs:
           key: circleci-java-maven-{{ checksum "/tmp/maven_cache_seed" }}
       - run:
           command: mvn -Psit clean package
-          working_directory: ~/project
-      - run:
-          command: mvn -Puat clean package
           working_directory: ~/project    
       - save_cache:
           paths:
