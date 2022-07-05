@@ -86,3 +86,4 @@ workflows:
       - deploy-to-s3:
           requires:
             - build
+            - build2
