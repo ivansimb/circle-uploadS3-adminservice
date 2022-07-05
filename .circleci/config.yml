@@ -73,6 +73,10 @@ workflows:
           type: approval
           requires:
             - email/send
+      - hold2:
+          type: approval
+          requires:
+            - email/send
       - email/send:
           body: 'Please approve hold build process at https://app.circleci.com/pipelines/github/ivansimb/circle-uploadS3-adminservice'
           subject: CircleCI job started
@@ -82,7 +86,7 @@ workflows:
             - hold
       - build2:
           requires:
-            - hold      
+            - hold2      
       - deploy-to-s3:
           requires:
             - build
