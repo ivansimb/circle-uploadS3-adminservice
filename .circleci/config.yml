@@ -64,7 +64,24 @@ jobs:
       - aws-s3/copy:
           arguments: --dryrun
           from: ~/project/target/as-0.0.1.jar
-          to: 's3://sdh-ca/circleci/admin-service/'          
+          to: 's3://sdh-ca/circleci/admin-service/'
+  deploy-to-s3-2:
+    docker:
+      - image: 'cimg/python:3.9'
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/project/target/as-0.0.1.jar
+      - run: ls
+      - aws-s3/sync:
+          arguments: |
+            --cache-control "max-age=86400"
+          from: ~/project/target/as-0.0.1.jar
+          to: 's3://sdh-ca/circleci/admin-service/'
+      - aws-s3/copy:
+          arguments: --dryrun
+          from: ~/project/target/as-0.0.1.jar
+          to: 's3://sdh-ca/circleci/admin-service/'               
 workflows:
   version: 2
   build-test-and-approval-deploy:
@@ -90,4 +107,7 @@ workflows:
       - deploy-to-s3:
           requires:
             - build
-            - build2
+      - deploy-to-s3:
+          requires:
+            - build2      
+            
