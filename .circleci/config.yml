@@ -107,7 +107,7 @@ workflows:
       - deploy-to-s3:
           requires:
             - build
-      - deploy-to-s3:
+      - deploy-to-s3-2:
           requires:
             - build2      
             
