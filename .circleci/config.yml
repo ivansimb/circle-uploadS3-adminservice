@@ -27,6 +27,30 @@ jobs:
       - persist_to_workspace:
           root: ~/project/target/
           paths: .
+  build2:
+    docker:
+      - image: cimg/openjdk:15.0.1
+    steps:
+      - checkout
+      - run:
+          command: find . -name 'pom.xml' | sort | xargs cat > /tmp/maven_cache_seed
+          working_directory: ~/project
+      - restore_cache:
+          key: circleci-java-maven-{{ checksum "/tmp/maven_cache_seed" }}
+      - run:
+          command: mvn -Puat clean package
+          working_directory: ~/project    
+      - save_cache:
+          paths:
+            - ~/.m2/repository
+          key: circleci-java-maven-{{ checksum "/tmp/maven_cache_seed" }}
+      - store_test_results:
+          path: ~/project/target/as-0.0.1.jar
+      - store_artifacts:
+          path: ~/project/target/as-0.0.1.jar
+      - persist_to_workspace:
+          root: ~/project/target/
+          paths: .        
   deploy-to-s3:
     docker:
       - image: 'cimg/python:3.9'
@@ -62,3 +86,4 @@ workflows:
       - deploy-to-s3:
           requires:
             - build
+            - build2
