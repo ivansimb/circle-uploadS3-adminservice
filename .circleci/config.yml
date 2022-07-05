@@ -16,6 +16,9 @@ jobs:
       - run:
           command: mvn -Psit clean package
           working_directory: ~/project
+      - run:
+          command: mvn -Puat clean package
+          working_directory: ~/project    
       - save_cache:
           paths:
             - ~/.m2/repository
