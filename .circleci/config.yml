@@ -24,6 +24,9 @@ jobs:
           path: ~/project/target/as-0.0.1.jar
       - store_artifacts:
           path: ~/project/target/as-0.0.1.jar
+      - persist_to_workspace:
+          root: ~/project/target/
+          paths: .    
   build2:
     docker:
       - image: cimg/openjdk:15.0.1
