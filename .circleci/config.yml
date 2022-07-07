@@ -51,7 +51,7 @@ jobs:
       - persist_to_workspace:
           root: ~/project/target/
           paths: .        
-  deploy-to-s3-lab:
+  deploy-to-s3:
     docker:
       - image: 'cimg/python:3.9'
     steps:
@@ -103,7 +103,7 @@ workflows:
           to: ivan.simbolon@gmail.com
       - build:
           requires:
-            - hold
+            - hold-lab
       - build2:
           requires:
             - hold2      
